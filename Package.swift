@@ -3,6 +3,9 @@ import PackageDescription
 
 let package = Package(
     name: "AdventOfCode2025",
+    platforms: [
+        .macOS(.v26)     // ← lägg till detta
+    ],
     products: [
         .executable(name: "day01", targets: ["day01"]),
         .executable(name: "day02", targets: ["day02"]),
@@ -40,6 +43,14 @@ let package = Package(
             name: "day04",
             dependencies: ["Shared"],
             path: "Sources/day04",
+            resources: [
+                .copy("input.txt")
+            ]
+        ),
+        .executableTarget(
+            name: "day05",
+            dependencies: ["Shared"],
+            path: "Sources/day05",
             resources: [
                 .copy("input.txt")
             ]

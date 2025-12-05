@@ -4,7 +4,8 @@ import Shared
 @main
 struct App {
     static func main() {
-        let input = try! String(contentsOf: Bundle.module.url(forResource: "input", withExtension: "txt")!)
+        let url = Bundle.module.url(forResource: "input", withExtension: "txt")!
+        let input = try! String(contentsOf: url, encoding: .utf8)
         print("Part 1:", part1(input: input))
         print("Part 2:", part2(input: input))
     }
