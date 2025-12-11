@@ -69,7 +69,7 @@ func part1(input: String) -> BigInt {
     return countPaths(from: "you", to: "out", in: graph)
 }
 
-// MARK: - Part 2: paths from "svr" to "out" that visit both "dac" and "fft"
+// MARK: - Part 2: paths from start to target that visit mustVisit ("dac" and "fft")
 
 private func countPathsViaSpecial(from start: String,
                                   to target: String,
@@ -85,12 +85,14 @@ private func countPathsViaSpecial(from start: String,
         let state = State(node: node, mask: mask)
         if let cached = memo[state] { return cached }
 
+        // Reached target
         if node == target {
             let result: BigInt = (mask & 0b11) == 0b11 ? 1 : 0
             memo[state] = result
             return result
         }
 
+        // Reached a dead end
         guard let neighbors = graph[node], !neighbors.isEmpty else {
             memo[state] = 0
             return 0
