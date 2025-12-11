@@ -19,10 +19,6 @@ let package = Package(
         .executable(name: "day10", targets: ["day10"]),
         .executable(name: "day11", targets: ["day11"]),
     ],
-    dependencies: [
-        .package(url: "https://github.com/apple/swift-numerics", from: "1.1.1"),
-        .package(url: "https://github.com/attaswift/BigInt", from: "5.3.0"),
-    ],
     targets: [
         .target(
             name: "Shared",
@@ -110,13 +106,17 @@ let package = Package(
         ),
         .executableTarget(
             name: "day11",
-            dependencies: [
-                "Shared",
-                .product(name: "Numerics", package: "swift-numerics"),
-                .product(name: "BigInt", package: "BigInt")
-            ],
+            dependencies: ["Shared"],
             path: "Sources/day11",
             resources: [.copy("input.txt")]
+        ),
+        .executableTarget(
+            name: "day12",
+            dependencies: ["Shared"],
+            path: "Sources/day12",
+            resources: [
+                .copy("input.txt")
+            ]
         ),
     ]
 )

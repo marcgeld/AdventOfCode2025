@@ -1,6 +1,6 @@
 import Foundation
 import Shared
-import BigInt
+
 
 // MARK: - Model
 
@@ -37,11 +37,11 @@ private func parseGraph(_ input: String) -> Graph {
 
 private func countPaths(from start: String,
                         to target: String,
-                        in graph: Graph) -> BigInt {
+                        in graph: Graph) -> UInt128 {
 
-    var memo: [String: BigInt] = [:]
+    var memo: [String: UInt128] = [:]
 
-    func dfs(_ node: String) -> BigInt {
+    func dfs(_ node: String) -> UInt128 {
         if let cached = memo[node] { return cached }
         if node == target {
             memo[node] = 1
@@ -64,7 +64,7 @@ private func countPaths(from start: String,
     return dfs(start)
 }
 
-func part1(input: String) -> BigInt {
+func part1(input: String) -> UInt128 {
     let graph = parseGraph(input)
     return countPaths(from: "you", to: "out", in: graph)
 }
@@ -74,20 +74,20 @@ func part1(input: String) -> BigInt {
 private func countPathsViaSpecial(from start: String,
                                   to target: String,
                                   mustVisit: (String, String),
-                                  in graph: Graph) -> BigInt {
+                                  in graph: Graph) -> UInt128 {
     let (dac, fft) = mustVisit
 
     // mask bit 0 => visited dac
     // mask bit 1 => visited fft
-    var memo: [State: BigInt] = [:]
+    var memo: [State: UInt128] = [:]
 
-    func dfs(_ node: String, _ mask: Int) -> BigInt {
+    func dfs(_ node: String, _ mask: Int) -> UInt128 {
         let state = State(node: node, mask: mask)
         if let cached = memo[state] { return cached }
 
         // Reached target
         if node == target {
-            let result: BigInt = (mask & 0b11) == 0b11 ? 1 : 0
+            let result: UInt128 = (mask & 0b11) == 0b11 ? 1 : 0
             memo[state] = result
             return result
         }
@@ -98,7 +98,7 @@ private func countPathsViaSpecial(from start: String,
             return 0
         }
 
-        var total: BigInt = 0
+        var total: UInt128 = 0
         for next in neighbors {
             var newMask = mask
             if next == dac { newMask |= 0b01 }
@@ -117,7 +117,7 @@ private func countPathsViaSpecial(from start: String,
     return dfs(start, startMask)
 }
 
-func part2(input: String) -> BigInt {
+func part2(input: String) -> UInt128 {
     let graph = parseGraph(input)
     return countPathsViaSpecial(from: "svr",
                                 to: "out",
