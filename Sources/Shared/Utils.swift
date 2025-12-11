@@ -3,6 +3,7 @@ import Foundation
 /// Utility helpers shared across days.
 public enum Utils {
     /// Measure execution time of a block and return its result with elapsed milliseconds.
+    @discardableResult
     @inlinable
     public static func measure<T>(_ label: String, _ block: () -> T) -> (T, Double) {
         let start = CFAbsoluteTimeGetCurrent()
